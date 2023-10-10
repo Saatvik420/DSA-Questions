@@ -1,33 +1,30 @@
 class Solution {
-public:
-    int minFlips(int a, int b, int c) {
+    public int minFlips(int a, int b, int c) {
         int flips = 0;
-        
-        // Iterate through the bits of a, b, and c
-        while (a > 0 || b > 0 || c > 0) {
-            int bit_a = a & 1;  // Get the least significant bit of a
-            int bit_b = b & 1;  // Get the least significant bit of b
-            int bit_c = c & 1;  // Get the least significant bit of c
+        int bitA, bitB, bitC;
 
-            // Check if the least significant bit of c is 0
-            if (bit_c == 0) {
-                // If c is 0, both a and b should have their corresponding bits as 0
-                // Add the sum of bit_a and bit_b to flips to account for the necessary flips
-                flips += (bit_a + bit_b);
-            } else {
-                // If c is 1, at least one of a and b should have its corresponding bit as 1
-                if (bit_a == 0 && bit_b == 0) {
-                    // If both bit_a and bit_b are 0, increment flips by 1 to indicate the need for a flip
-                    flips += 1;
+        while (a > 0 || b > 0 || c > 0) 
+        {
+            bitA = a & 1;  // Get the rightmost bit of a
+            bitB = b & 1;  // Get the rightmost bit of b
+            bitC = c & 1;  // Get the rightmost bit of c
+
+            if ((bitA | bitB) != bitC) 
+            {
+                if (bitC == 0) 
+                {
+                    flips += (bitA + bitB);  // Flip both bits of a and b
+                } 
+                else 
+                {
+                    flips += 1;  // Flip any one bit of a or b
                 }
             }
 
-            // Shift bits to the right
-            a >>= 1;
-            b >>= 1;
-            c >>= 1;
+            a >>= 1;  // Shift right to get the next bit of a
+            b >>= 1;  // Shift right to get the next bit of b
+            c >>= 1;  // Shift right to get the next bit of c
         }
-
         return flips;
     }
-};
+}
